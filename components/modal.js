@@ -1,4 +1,4 @@
-const Modal = props => {
+const Modal = ({ children, hasSubmitButton }) => {
   let closeButton = null;
   const submitModal = () => {
     alert('Submitting modal');
@@ -39,7 +39,7 @@ const Modal = props => {
                 <span aria-hidden='true'>&times;</span>
               </button>
             </div>
-            <div className='modal-body'>{props.children}</div>
+            <div className='modal-body'>{children}</div>
             <div className='modal-footer'>
               <button
                 type='button'
@@ -49,13 +49,15 @@ const Modal = props => {
               >
                 Close
               </button>
-              <button
-                onClick={submitModal}
-                type='button'
-                className='btn btn-primary'
-              >
-                Save changes
-              </button>
+              {hasSubmitButton && (
+                <button
+                  onClick={submitModal}
+                  type='button'
+                  className='btn btn-primary'
+                >
+                  Save changes
+                </button>
+              )}
             </div>
           </div>
         </div>

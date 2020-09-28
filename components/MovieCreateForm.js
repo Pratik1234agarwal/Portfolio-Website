@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const MovieCreateForm = () => {
+export const MovieCreateForm = ({ handleFormSubmit }) => {
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -23,6 +23,26 @@ export const MovieCreateForm = () => {
       [name]: value
     });
   };
+  const handleGenreChange = event => {
+    const { options } = event.target;
+    const optionsLength = options.length;
+    let value = [];
+    for (let i = 0; i < optionsLength; i++) {
+      if (options[i].selected) {
+        value.push(options[i].value);
+      }
+    }
+    setForm({
+      ...form,
+      genre: value.toString()
+    });
+  };
+
+  const submitForm = event => {
+    // Call here to create a movie from
+    handleFormSubmit({ ...form });
+  };
+
   return (
     <div>
       <form>
@@ -42,6 +62,7 @@ export const MovieCreateForm = () => {
         <div className='form-group'>
           <label for='description'>Description</label>
           <input
+            onChange={handleChange}
             name='description'
             value={form.description}
             type='text'
@@ -53,6 +74,7 @@ export const MovieCreateForm = () => {
         <div className='form-group'>
           <label for='description'>Rating</label>
           <input
+            onChange={handleChange}
             name='rating'
             value={form.rating}
             type='number'
@@ -69,6 +91,7 @@ export const MovieCreateForm = () => {
         <div className='form-group'>
           <label for='image'>Image</label>
           <input
+            onChange={handleChange}
             name='image'
             value={form.image}
             type='text'
@@ -80,6 +103,7 @@ export const MovieCreateForm = () => {
         <div className='form-group'>
           <label for='cover'>Cover</label>
           <input
+            onChange={handleChange}
             name='cover'
             value={form.cover}
             type='text'
@@ -91,6 +115,7 @@ export const MovieCreateForm = () => {
         <div className='form-group'>
           <label for='longDesc'>Long Description</label>
           <textarea
+            onChange={handleChange}
             name='longDes'
             value={form.longDes}
             className='form-control'
@@ -100,7 +125,12 @@ export const MovieCreateForm = () => {
         </div>
         <div className='form-group'>
           <label for='genre'>Genre</label>
-          <select multiple className='form-control' id='genre'>
+          <select
+            onChange={handleGenreChange}
+            multiple
+            className='form-control'
+            id='genre'
+          >
             <option>drama</option>
             <option>music</option>
             <option>adventure</option>
@@ -108,6 +138,9 @@ export const MovieCreateForm = () => {
             <option>action</option>
           </select>
         </div>
+        <button onClick={submitForm} type='button' className='btn btn-primary'>
+          Create
+        </button>
       </form>
     </div>
   );

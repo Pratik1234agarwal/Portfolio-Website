@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import Modal from './modal';
 import MovieCreateForm from './MovieCreateForm';
+import { CreateMovie, createMovie } from '../actions';
 
 const Sidemenu = ({ categories }) => {
+  const handleCreateMovie = movie => {
+    createMovie(movie).then(movies => {
+      console.log(JSON.stringify(movies));
+    });
+  };
   return (
     <div>
-      <Modal>
-        <MovieCreateForm />
+      <Modal hasSubmitButton={false}>
+        <MovieCreateForm handleFormSubmit={handleCreateMovie} />
       </Modal>
       <h1 className='my-4'>Shop Name</h1>
       <div className='list-group'>
